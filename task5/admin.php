@@ -20,14 +20,13 @@
   }
 ?>
 
-<!DOCTYPE html>
 <html lang="ru">
   <head>
     <meta charset="utf-8">
     <title>Admin</title>
   </head>
   <body>
-    <form action="/delete.php">
+    <form action="delete.php">
     <table>
       <tr>
         <th>Имя</th>

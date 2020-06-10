@@ -1,0 +1,97 @@
+// 1
+// Из полного имени файла (например, picture.jpg)
+// получите его расширение (например, jpg)
+function get_extension($file) {
+  preg_match("/^[\S\.]*\.(\S+)$/", $file, $matches);
+  return $matches[1];
+}
+
+// 2
+// По полному имени файла проверьте соответствует ли оно:
+// а) архиву
+function is_archive($file) {
+  $ext = get_extension($file);
+  if (preg_match('/^(tar|gz|zip|bz2|7z)$/', $ext)) {
+    return True;
+  }
+  return False;
+}
+
+// б) аудиофайлу
+function is_audio($file) {
+  $ext = get_extension($file);
+  if (preg_match('/^(wav|mp3|wma)$/', $ext)) {
+    return True;
+  }
+  return False;
+}
+
+// в) видеофайлу
+function is_video($file) {
+  $ext = get_extension($file);
+  if (preg_match('/^(webm|mpg|mp2|mpeg|mpe|mpv|ogg|mp4|m4p|m4v|avi|wmv|mov)$/', $ext)) {
+    return True;
+  }
+  return False;
+}
+
+// г) картинке
+function is_image($file) {
+  $ext = get_extension($file);
+  if (preg_match('/^(bmp|gif|ico|jpeg|jpg|png|tiff)$/', $ext)) {
+    return True;
+  }
+  return False;
+}
+
+// 3
+// В произвольном HTML-коде найдите строку, заключенную в теги <title></title>
+function get_title($text) {
+  preg_match('/<title>(.*)<\/title>/', $text, $matches);
+  return $matches[1];
+}
+
+// 4
+// В произвольном HTML-коде найдите все ссылки в тегах <a> (атрибут href)
+function get_links($text) {
+  preg_match_all('/<a.*href=[\'\"]([^\'\"]*)[\'\"].*>(.*)<\/a>/', $text, $matches);
+  return $matches[1];
+}
+
+// 5
+// В произвольном HTML-коде найдите все ссылки на картинки в тегах <img> (атрибут src)
+function get_src($text) {
+  preg_match_all('/<img.*src=[\'\"]([^\'\"]*)[\'\"].*>/', $text, $matches);
+  return $matches[1];
+}
+
+// 6
+// В произвольном тексте найдите и подсветите с помощью тега <strong> заданную строку
+function highlight($text, $str) {
+  $str = preg_quote($str);
+  return preg_replace("/$str/", '<strong>$0</strong>', $text);
+}
+
+// 7
+// В произвольном тексте найдите определенный набор текстовых смайликов :), ;), :(
+// на соответствующие им картинки <img src="smile.png" alt=":)">,
+// <img src="wink.png" alt=";)">, <img src="sad.png" alt=":(">
+function smilify($text) {
+  $patterns = [
+    '/\:\)/',
+    '/\;\)/',
+    '/\:\(/',
+  ];
+  $replacements = [
+    '<img src="smile.png" alt=":)">',
+    '<img src="wink.png" alt=";)">',
+    '<img src="sad.png" alt=":(">',
+  ];
+  return preg_replace($patterns, $replacements, $text);
+}
+
+// 8
+// В заданной строке избавьтесь от случайных повторяющихся пробелов.
+function clear($text) {
+  return preg_replace('/\s+/', ' ', $text);
+}

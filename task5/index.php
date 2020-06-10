@@ -1,5 +1,14 @@
 <?php
   $n_args = count($_GET);
+  $name = "";
+  $surname = "";
+  $email = "";
+  $phone = "";
+  $topic = "";
+  $payment = "";
+  $mailing = "";
+  $warning = "";
+  $ok = "";
   if ($n_args > 1) {
     $name = trim($_GET['name']);
     $surname = trim($_GET['surname']);
@@ -40,11 +49,9 @@ if (!$ok) {
   include 'page.html';
 } else {
   $date = new DateTime();
-  $filename = hash('md5', $name.$surname.strval($date->getTimeStamp)).".dat";
+  $filename = hash('md5', $name.$surname.strval($date->getTimeStamp())).".dat";
   $data = $name."\n".$surname."\n".$email."\n".$phone."\n".$topic."\n".$payment."\n".$mailing."\n";
-  $file = fopen('applications/'.$filename, 'w');
-  fwrite($file, $data);
-  fclose($file);
+  file_put_contents("applications/".$filename, $data);
   include 'success.html';
 }
 ?>
